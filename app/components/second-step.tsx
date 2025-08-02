@@ -1,152 +1,142 @@
 import { AnyFieldApi } from "@tanstack/react-form";
 
-import {
-  Accessibility,
-  GraduationCap,
-  Hospital,
-  Stethoscope,
-  Syringe,
-} from "lucide-react";
+import { UsersIcon } from "lucide-react";
 
 import FieldInfo from "./ui/field-info";
 
-export default function FirstStep({ form, step, setStep }: Props) {
+export default function SecondStep({ form, step, setStep }: Props) {
   return (
     <div className="relative space-y-6">
       {/* Header */}
       <h2 className="text-foreground text-lg sm:text-xl text-center tracking-normal font-semibold">
-        What type of
-        <span className="font-extrabold"> facility </span>
-        would you like to have trained?
+        How many
+        <span className="font-bold"> people </span>
+        are expected to attend?
       </h2>
 
       {/* Form Field */}
-      <div className="grid md:grid-cols-2 gap-4">
-        <form.Field name="organization">
+      <div className="grid md:grid-cols-2 gap-4 md:min-w-[630px]">
+        <form.Field name="person">
           {(field: AnyFieldApi) => {
             return (
               <>
-                {/* Medical Practice */}
-                <div>
+                {/* Up to 5 */}
+                <div className="min-w-full">
                   <label
                     className="text-start text-foreground rounded-lg border border-transparent hover:border-primary bg-white px-6 py-4 shadow-sm focus:outline-none flex items-center gap-x-2 w-full cursor-pointer transition-all hover:scale-95 duration-300"
-                    htmlFor="organization-1"
+                    htmlFor="person-1"
                   >
                     <input
-                      id="organization-1"
-                      name="organization"
+                      id="person-1"
+                      name="person"
                       type="radio"
-                      value="Medical Practice"
-                      checked={field.state.value === "Medical Practice"}
-                      onChange={() => field.handleChange("Medical Practice")}
+                      value="Up to 5"
+                      checked={field.state.value === "Up to 5"}
+                      onChange={() => field.handleChange("Up to 5")}
                       onClick={() => setStep(step + 1)}
                       className="absolute w-0 h-0"
                     />
-                    <Stethoscope
+                    <UsersIcon
                       className="h-5 w-5 stroke-primary shrink-0"
                       aria-hidden="true"
                     />
-                    <span>Medical Practice</span>
+                    <span>Up to 5</span>
                   </label>
                 </div>
 
-                {/* Dental Office */}
-                <div>
+                {/* 6–10 */}
+                <div className="min-w-full">
                   <label
                     className="text-start text-foreground rounded-lg border border-transparent hover:border-primary bg-white px-6 py-4 shadow-sm focus:outline-none flex items-center gap-x-2 w-full cursor-pointer transition-all hover:scale-95 duration-300"
-                    htmlFor="organization-2"
+                    htmlFor="person-2"
                   >
                     <input
-                      id="organization-2"
-                      name="organization"
+                      id="person-2"
+                      name="person"
                       type="radio"
-                      value="Dental Office"
-                      checked={field.state.value === "Dental Office"}
-                      onChange={() => field.handleChange("Dental Office")}
+                      value="6–10"
+                      checked={field.state.value === "6–10"}
+                      onChange={() => field.handleChange("6–10")}
                       onClick={() => setStep(step + 1)}
                       className="absolute w-0 h-0"
                     />
-                    <Syringe
+                    <UsersIcon
                       className="h-5 w-5 stroke-primary shrink-0"
                       aria-hidden="true"
                     />
-                    <span>Dental Office</span>
+                    <span>6–10</span>
                   </label>
                 </div>
 
-                {/* Care Facility  */}
-                <div>
+                {/* 11–15 */}
+                <div className="min-w-full">
                   <label
                     className="text-start text-foreground rounded-lg border border-transparent hover:border-primary bg-white px-6 py-4 shadow-sm focus:outline-none flex items-center gap-x-2 w-full cursor-pointer transition-all hover:scale-95 duration-300"
-                    htmlFor="organization-3"
+                    htmlFor="person-3"
                   >
                     <input
-                      id="organization-3"
-                      name="organization"
+                      id="person-3"
+                      name="person"
                       type="radio"
-                      value="Care Facility"
-                      checked={field.state.value === "Care Facility"}
-                      onChange={() => field.handleChange("Care Facility")}
+                      value="11–15"
+                      checked={field.state.value === "11–15"}
+                      onChange={() => field.handleChange("11–15")}
                       onClick={() => setStep(step + 1)}
                       className="absolute w-0 h-0"
                     />
-                    <Hospital
+                    <UsersIcon
                       className="h-5 w-5 stroke-primary shrink-0"
                       aria-hidden="true"
                     />
-                    <span>Care Facility</span>
+                    <span>11–15</span>
                   </label>
                 </div>
 
-                {/* Physiotherapy Treatment  */}
-                <div>
+                {/* 16–20 */}
+                <div className="min-w-full">
                   <label
                     className="text-start text-foreground rounded-lg border border-transparent hover:border-primary bg-white px-6 py-4 shadow-sm focus:outline-none flex items-center gap-x-2 w-full cursor-pointer transition-all hover:scale-95 duration-300"
-                    htmlFor="organization-4"
+                    htmlFor="person-4"
                   >
                     <input
-                      id="organization-4"
-                      name="organization"
+                      id="person-4"
+                      name="person"
                       type="radio"
-                      value="Physiotherapy Treatment"
-                      checked={field.state.value === "Physiotherapy Treatment"}
-                      onChange={() =>
-                        field.handleChange("Physiotherapy Treatment")
-                      }
+                      value="16–20"
+                      checked={field.state.value === "16–20"}
+                      onChange={() => field.handleChange("16–20")}
                       onClick={() => setStep(step + 1)}
                       className="absolute w-0 h-0"
                     />
-                    <Accessibility
+                    <UsersIcon
                       className="h-5 w-5 stroke-primary shrink-0"
                       aria-hidden="true"
                     />
-                    <span>Physiotherapy Treatment</span>
+                    <span>16–20</span>
                   </label>
                 </div>
 
-                {/* Daycare Center or School */}
-                <div>
+                {/* 22+ */}
+                <div className="min-w-full">
                   <label
                     className="text-start text-foreground rounded-lg border border-transparent hover:border-primary bg-white px-6 py-4 shadow-sm focus:outline-none flex items-center gap-x-2 w-full cursor-pointer transition-all hover:scale-95 duration-300"
-                    htmlFor="organization-5"
+                    htmlFor="person-5"
                   >
                     <input
-                      id="organization-5"
-                      name="organization"
+                      id="person-5"
+                      name="person"
                       type="radio"
-                      value="Daycare Center or School"
-                      checked={field.state.value === "Daycare Center or School"}
-                      onChange={() =>
-                        field.handleChange("Daycare Center or School")
-                      }
+                      value="22+"
+                      checked={field.state.value === "22+"}
+                      onChange={() => field.handleChange("22+")}
                       onClick={() => setStep(step + 1)}
                       className="absolute w-0 h-0"
                     />
-                    <GraduationCap
+                    <UsersIcon
                       className="h-5 w-5 stroke-primary shrink-0"
                       aria-hidden="true"
                     />
-                    <span>Daycare Center or School</span>
+                    <span>22+</span>
                   </label>
                 </div>
 
