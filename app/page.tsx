@@ -50,7 +50,7 @@ export default function Home() {
     } as FormDataTypes,
 
     onSubmit: async ({ value }: { value: FormDataTypes }) => {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // await new Promise((resolve) => setTimeout(resolve, 2000));
 
       if (!token) {
         toast.error("Please complete the Recaptcha verification.");
