@@ -5,9 +5,18 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import {
+  GoogleReCaptcha,
+  GoogleReCaptchaProvider,
+} from "react-google-recaptcha-v3";
+
+import { toast, Toaster } from "sonner";
+
 import { useForm } from "@tanstack/react-form";
 
 import { FormDataTypes, formSchema } from "@/lib/types";
+
+import { submitFormAction } from "./actions";
 
 import FirstStep from "./components/first-step";
 import SecondStep from "./components/second-step";
@@ -16,10 +25,18 @@ import ThirdStep from "./components/third-step";
 import ProgressBar from "./components/ui/progressbar";
 import SubmitButton from "./components/ui/submit-button";
 import BackButton from "./components/ui/back-button";
+import LastStep from "./components/last-step";
 
 export default function Home() {
   // Step Number
   const [step, setStep] = useState<number>(1);
+
+  // Google ReCaptcha Token
+  const [token, setToken] = useState<string | null>(null);
+
+  const [submittedData, setSubmittedData] = useState<FormDataTypes | null>(
+    null
+  );
 
   // Form State
   const form = useForm({
@@ -35,7 +52,38 @@ export default function Home() {
     onSubmit: async ({ value }: { value: FormDataTypes }) => {
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      console.log("Submitted Data:", value);
+      if (!token) {
+        toast.error("Please complete the Recaptcha verification.");
+        return;
+      }
+
+      try {
+        const formData = new FormData();
+
+        // Append all form values to FormData
+        Object.entries(value).forEach(([key, val]) => {
+          formData.append(key, String(val));
+        });
+
+        // Append the reCAPTCHA token
+        formData.append("captcha", token);
+
+        // Call the action to submit the form
+        const response = await submitFormAction(null, formData);
+
+        if (response.status) {
+          toast.success("Form submitted successfully!");
+          setStep(4);
+          setSubmittedData(value);
+        } else {
+          toast.error(response.error);
+          console.log("Validation errors: " + response.error);
+        }
+      } catch (err) {
+        console.error("Error during form submission:", err);
+        toast.error("An error occurred while submitting the form.");
+        return;
+      }
     },
     validators: {
       onChange: formSchema,
@@ -53,6 +101,9 @@ export default function Home() {
         className="h-14 w-auto"
       />
 
+      {/* */}
+      <Toaster richColors position="bottom-center" />
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -67,6 +118,8 @@ export default function Home() {
           <SecondStep form={form} step={step} setStep={setStep} />
         ) : step === 3 ? (
           <ThirdStep form={form} />
+        ) : step === 4 ? (
+          <LastStep submittedData={submittedData} />
         ) : null}
 
         {/* Buttons And Progress Bar */}
@@ -78,7 +131,7 @@ export default function Home() {
             {step === 3 && (
               <>
                 {/* Submit Button */}
-                <SubmitButton form={form} />
+                <SubmitButton form={form} token={token} />
 
                 {/* Terms of privacy policy */}
                 <p className="text-sm leading-6 text-muted">
@@ -96,6 +149,16 @@ export default function Home() {
             )}
           </div>
         )}
+
+        <GoogleReCaptchaProvider
+          reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+        >
+          <GoogleReCaptcha
+            onVerify={(token) => {
+              setToken(token);
+            }}
+          />
+        </GoogleReCaptchaProvider>
       </form>
     </div>
   );

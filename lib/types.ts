@@ -10,7 +10,7 @@ export const formSchema = z.object({
     .string()
     .min(3, "Organization Name must be at least 3 characters"),
   fullName: z.string().min(3, "Name must be at least 3 characters"),
-  email: z.email("Invalid email address"),
+  email: z.string().email("Invalid email address"),
   organization: z
     .union([
       z.literal("Medical Practice"),
