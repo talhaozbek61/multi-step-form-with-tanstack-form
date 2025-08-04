@@ -16,7 +16,7 @@ export async function submitFormAction(prevState: null, formData: FormData) {
       | "Care Facility"
       | "Physiotherapy Treatment"
       | "Daycare Center or School",
-    phone: Number(formData.get("phone")),
+    phone: formData.get("phone") as string,
     person: formData.get("person") as
       | "Up to 5"
       | "6–10"

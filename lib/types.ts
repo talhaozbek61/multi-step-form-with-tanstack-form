@@ -22,10 +22,7 @@ export const formSchema = z.object({
     .refine(() => true, {
       message: "Please select a organization",
     }),
-  phone: z.coerce
-    .number()
-    .positive()
-    .min(10, "Phone must be at least 10 digits"),
+  phone: z.string().regex(/^\d{10,}$/, "Phone must be at least 10 digits"),
   person: z
     .union([
       z.literal("Up to 5"),

@@ -45,7 +45,7 @@ export default function Home() {
       fullName: "",
       email: "",
       organization: "Medical Practice",
-      phone: 0,
+      phone: "",
       person: "Up to 5",
     } as FormDataTypes,
 
